@@ -1,8 +1,42 @@
 import { useCart } from "../hooks/useCart"
 import { CartActionType, CartItem } from "../reducers/CartReducer"
+import { useState, useEffect } from "react"
 
 export const CartPage = () => {
     const { cart, dispatch } = useCart()
+
+
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
+    const [streetAddress, setStreetAddress] = useState("")
+    const [postalCode, setPostalCode] = useState("")
+    const [city, setCity] = useState("")
+    const [country, setCountry] = useState("")
+
+    useEffect(() => {
+        const data = localStorage.getItem("checkoutCustomer")
+        if (data) {
+            const parsed = JSON.parse(data)
+            setFirstName(parsed.firstName || "")
+            setLastName(parsed.lastName || "")
+            setEmail(parsed.email || "")
+            setPhone(parsed.phone || "")
+            setStreetAddress(parsed.streetAddress || "")
+            setPostalCode(parsed.postalCode || "")
+            setCity(parsed.city || "")
+            setCountry(parsed.country || "")
+        }
+    }, [])
+
+    useEffect(() => {
+        const data = {
+            firstName, lastName, email, phone, streetAddress, postalCode, city, country
+        }
+        localStorage.setItem("checkoutCustomer", JSON.stringify(data))
+    }, [firstName, lastName, email, phone, streetAddress, postalCode, city, country])
+    
 
         const totalCartPrice = cart.reduce((total, item: CartItem) => {
         return total + item.product.price * item.quantity
