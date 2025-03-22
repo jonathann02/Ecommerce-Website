@@ -63,6 +63,56 @@ export const CartPage = () => {
         })
     }
 
+    const handleProceedToPayment = async () => {
+        try {
+            if (!firstName || !lastName || !email || !streetAddress || !postalCode || !city ||!country) {
+                alert ("Fill in all required fields")
+                return
+            }
+            if (cart.length === 0) {
+                alert("Cart is empty")
+                return
+            }
+
+            let customerId: number | null = null
+            const checkResponse = await fetch(`http://localhost:3000/customers/email/${email}`)
+            if (checkResponse.status === 404) {
+
+                const newCustomerData = {
+                    firstname: firstName, 
+                    lastName: lastName, 
+                    email: email, 
+                    phone: phone, 
+                    street_address: streetAddress, 
+                    postal_code: postalCode, 
+                    city: city, 
+                    country: country
+                }
+
+                const createResponse = await fetch("http://localhost:3000/customers", {
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json" }, 
+                    body: JSON.stringify(newCustomerData)
+                })
+                if (!createResponse.ok) {
+                    throw new Error ("Could not create customer")  
+                }
+                const createdCustomer = await createResponse.json()
+                customerId = createdCustomer.insertId || createdCustomer.id
+            } else if (checkResponse.ok) {
+                const existingCustomer = await checkResponse.json()
+                customerId = existingCustomer.id
+            }
+            
+
+   else {
+    throw new Error("failed to check customer by email")
+
+   }
+
+   if (!customerId) throw new Error ("No customer ID found")
+
+
     const handleCreateOrder = async () => {
         try {
             const orderItems = cart.map((item) => ({
