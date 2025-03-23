@@ -34,6 +34,7 @@ export const CartPage = () => {
         const data = {
             firstName, lastName, email, phone, streetAddress, postalCode, city, country
         }
+
         localStorage.setItem("checkoutCustomer", JSON.stringify(data))
     }, [firstName, lastName, email, phone, streetAddress, postalCode, city, country])
     
@@ -147,6 +148,39 @@ export const CartPage = () => {
         }
     }
 
+
+    const lineItems = cart.map((item) => ({
+        price_data: {
+            currency: "sek",
+            product_data: { name: item.product.name }, 
+            unit_amount: item.product.price * 100
+        }, 
+        quantity: item.quantity
+    }))
+
+    const stripePayload = {
+        order_id: orderId, 
+        line_items: lineItems
+    }
+
+    const stripeResponse = await fetch("http://localhost:3000/stripe/create-checkout-session-hosted", {
+        method: "POST", 
+        headers: { "Content-Type": "application/json"}, 
+        body: JSON.stringify(stripePayload)
+    })
+    if (!stripeResponse.ok) {
+        throw new Error("Error")
+    }
+    const stripeData = await stripeResponse.json()
+
+    window.location.href = stripeData.checkout_url 
+} catch (err: any) {
+    console.error(err)
+    alert(err.message)
+}
+    
+
+
     return (
         <div>
             <h2>Varukorg</h2>
@@ -177,6 +211,33 @@ export const CartPage = () => {
             {cart.length > 0 && (
                 <button onClick={handleCreateOrder}>Köp</button>
             )}
+
+            <h3>Shipping Address</h3>
+            <label>First Name</label>
+            <input value={firstName} onChange={e => setFirstName(e.target.value)} />
+
+            <label>Last Name</label>
+            <input value={lastName} onChange={e => setLastName(e.target.value)} />
+
+            <label>Phone</label>
+            <input value={phone} onChange={e => setPhone(e.target.value)} />
+
+
+            <label>Street Address</label>
+            <input value={streetAddress} onChange={e => setStreetAddress(e.target.value)} />
+
+            <label>Postal Code</label>
+            <input value={postalCode} onChange={e => setPostalCode(e.target.value)} />
+
+
+            <label>City</label>
+            <input value={city} onChange={e => setCity(e.target.value)} />
+
+
+            <label>Country</label>
+            <input value={country} onChange={e => setCountry(e.target.value)} />
+
+            <button onClick={handleProceedToPayment}>Proceed to payment</button>
         </div>
     )
 }
