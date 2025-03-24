@@ -70,10 +70,11 @@ export const CartPage = () => {
                 alert ("Fill in all required fields")
                 return
             }
-            if (cart.length === 0) {
-                alert("Cart is empty")
-                return
-            }
+        }
+        if (cart.length === 0) {
+            alert("Cart is empty")
+            return
+        }
 
             let customerId: number | null = null
             const checkResponse = await fetch(`http://localhost:3000/customers/email/${email}`)
@@ -98,25 +99,24 @@ export const CartPage = () => {
                 if (!createResponse.ok) {
                     throw new Error ("Could not create customer")  
                 }
+
+
                 const createdCustomer = await createResponse.json()
                 customerId = createdCustomer.insertId || createdCustomer.id
             } else if (checkResponse.ok) {
                 const existingCustomer = await checkResponse.json()
                 customerId = existingCustomer.id
             }
-            
+                 else {
+                 throw new Error("failed to check customer by email")
 
-   else {
-    throw new Error("failed to check customer by email")
+           }
 
-   }
+                if (!customerId) {
+                throw new Error ("No customer ID found")
+                }
 
-   if (!customerId) throw new Error ("No customer ID found")
-
-
-    const handleCreateOrder = async () => {
-        try {
-            const orderItems = cart.map((item) => ({
+            const orderItems = cart.map(item => ({
                 product_id: item.product.id, 
                 product_name: item.product.name, 
                 quantity: item.quantity, 
@@ -124,32 +124,32 @@ export const CartPage = () => {
             }))
 
             const newOrder = {
-                customer_id: 1, 
-                payment_status: "pending",
+                customer_id: customerId, 
+                payment_status: "Unpaid",
                 payment_id: "", 
-                order_status: "processing", 
+                order_status: "Pending", 
                 order_items: orderItems
             }
 
-            const response = await fetch("http://localhost:3000/orders", {
+            const createOrderResponse = await fetch("http://localhost:3000/orders", {
                 method: "POST", 
                 headers: { "Content-Type": "application/json" }, 
                 body: JSON.stringify(newOrder)
             })
-            if (!response.ok) {
+            if (!createOrderResponse.ok) {
                 throw new Error("Kunde inte skapa en order")
             }
+            const orderData = await createOrderResponse.json()
+            const orderId = orderData.id  || orderData.insertId
 
-            alert("Order skapad")
-            handleResetCart()
-        } catch (error) {
-            console.error(error)
-            alert("Något gick fel")
-        }
-    }
+            if (!orderId) {
+                throw new Error("No order ID returned")
+            }
+
+           
 
 
-    const lineItems = cart.map((item) => ({
+    const lineItems = cart.map(item => ({
         price_data: {
             currency: "sek",
             product_data: { name: item.product.name }, 
@@ -172,22 +172,29 @@ export const CartPage = () => {
         throw new Error("Error")
     }
     const stripeData = await stripeResponse.json()
+    if (!stripeData.checkout_url) {
+        throw new Error("No checkout URL returned from Stripe")
+    }
 
     window.location.href = stripeData.checkout_url 
-} catch (err: any) {
-    console.error(err)
-    alert(err.message)
+
+
+    } catch (error: any) {
+    console.error(error)
+    alert(error.message)
 }
     
+
+
+if (cart.length === 0) {
+    return<p>Cart is empty</p>
+}
+
 
 
     return (
         <div>
             <h2>Varukorg</h2>
-
-            {cart.length === 0 ? (
-                <p>Vaurkorgen är tom</p>
-            ) : (
 
                 <ul>
                     {cart.map((item) => (
@@ -203,14 +210,11 @@ export const CartPage = () => {
                 )}
                 </ul>
 
-            )}
 
             <p>Totalpris: {totalCartPrice} kr</p>
             <button onClick={handleResetCart}>Töm Varukorgen</button>
 
-            {cart.length > 0 && (
-                <button onClick={handleCreateOrder}>Köp</button>
-            )}
+            
 
             <h3>Shipping Address</h3>
             <label>First Name</label>
@@ -239,5 +243,7 @@ export const CartPage = () => {
 
             <button onClick={handleProceedToPayment}>Proceed to payment</button>
         </div>
-    )
-}
+
+        )
+    }
+
