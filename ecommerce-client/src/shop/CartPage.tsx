@@ -70,11 +70,11 @@ export const CartPage = () => {
                 alert ("Fill in all required fields")
                 return
             }
-        }
-        if (cart.length === 0) {
-            alert("Cart is empty")
-            return
-        }
+            if (cart.length === 0) {
+                alert("Cart is empty")
+                return
+            }
+       
 
             let customerId: number | null = null
             const checkResponse = await fetch(`http://localhost:3000/customers/email/${email}`)
@@ -179,9 +179,11 @@ export const CartPage = () => {
     window.location.href = stripeData.checkout_url 
 
 
+
     } catch (error: any) {
     console.error(error)
     alert(error.message)
+}
 }
     
 
