@@ -76,19 +76,20 @@ export const CartPage = () => {
             }
        
 
-            let customerId: number | null = null
-            const checkResponse = await fetch(`http://localhost:3000/customers/email/${email}`)
+            
+            let checkResponse = await fetch(`http://localhost:3000/customers/email/${email}`)
             if (checkResponse.status === 404) {
 
                 const newCustomerData = {
                     firstname: firstName, 
-                    lastName: lastName, 
+                    lastname: lastName, 
                     email: email, 
                     phone: phone, 
                     street_address: streetAddress, 
                     postal_code: postalCode, 
                     city: city, 
-                    country: country
+                    country: country,
+                    password: ""
                 }
 
                 const createResponse = await fetch("http://localhost:3000/customers", {
@@ -99,22 +100,22 @@ export const CartPage = () => {
                 if (!createResponse.ok) {
                     throw new Error ("Could not create customer")  
                 }
+                
 
-
-                const createdCustomer = await createResponse.json()
-                customerId = createdCustomer.insertId || createdCustomer.id
-            } else if (checkResponse.ok) {
-                const existingCustomer = await checkResponse.json()
-                customerId = existingCustomer.id
-            }
-                 else {
-                 throw new Error("failed to check customer by email")
-
-           }
-
-                if (!customerId) {
-                throw new Error ("No customer ID found")
+                checkResponse = await fetch(`http://localhost:3000/customers/email/${email}`)
+                if (!checkResponse.ok) {
+                    throw new Error("Customer not found")
                 }
+            } else if (!checkResponse.ok) {
+                throw new Error("Failed to check customer by email")
+            }
+
+            const existingCustomer = await checkResponse.json()
+            const customerId = existingCustomer.id
+            if (!customerId) {
+                throw new Error("No customer ID found")
+            }
+
 
             const orderItems = cart.map(item => ({
                 product_id: item.product.id, 
@@ -139,8 +140,10 @@ export const CartPage = () => {
             if (!createOrderResponse.ok) {
                 throw new Error("Kunde inte skapa en order")
             }
+
+
             const orderData = await createOrderResponse.json()
-            const orderId = orderData.id  || orderData.insertId
+            const orderId = orderData.id 
 
             if (!orderId) {
                 throw new Error("No order ID returned")
@@ -227,6 +230,9 @@ if (cart.length === 0) {
 
             <label>Phone</label>
             <input value={phone} onChange={e => setPhone(e.target.value)} />
+
+            <label>Email</label>
+            <input value={email} onChange={e => setEmail(e.target.value)} />
 
 
             <label>Street Address</label>

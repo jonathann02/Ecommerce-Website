@@ -7,7 +7,8 @@ export const createHostedCheckoutSession = async (req: Request, res: Response) =
     try {
         const { order_id, line_items } = req.body
 
-        const session = await stripe.checkout.session.create({
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ["card"], 
             line_items, 
             mode: "payment",
             success_url: 'http://localhost:5173/order-confirmation?session_id={CHECKOUT_SESSION_ID}',
@@ -22,6 +23,7 @@ export const createHostedCheckoutSession = async (req: Request, res: Response) =
             session_id: session.id
         })
     } catch(error: any) {
+        console.error("stripe error =>", error)
         res.status(500).json({ error: error.message })
     }
     }

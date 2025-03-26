@@ -47,6 +47,7 @@ export const getOrderById = async (req: Request, res: Response) => {
     const sql = `
       SELECT 
         *, 
+        orders.id AS order_id,
         orders.created_at AS orders_created_at, 
         customers.created_at AS customers_created_at 
       FROM orders 
@@ -59,15 +60,43 @@ export const getOrderById = async (req: Request, res: Response) => {
     // return;
 
     rows && rows.length > 0
-      ? res.json(formatOrderDetails(id, rows))
+      ? res.json(formatOrderDetails(rows))
       : res.status(404).json({message: 'Order not found'})
   } catch (error) {
     res.status(500).json({error: logError(error)})
   }
 }
 
-const formatOrderDetails = (orderId, rows) => ({
-  id: orderId,
+
+export const getOrderByPaymentId = async (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  
+  try {
+    const sql = `
+      SELECT 
+        *, 
+        orders.id AS order_id,
+        orders.created_at AS orders_created_at, 
+        customers.created_at AS customers_created_at 
+      FROM orders 
+      LEFT JOIN customers ON orders.customer_id = customers.id
+      LEFT JOIN order_items ON orders.id = order_items.order_id
+      WHERE orders.payment_id = ?
+    `;
+    const [rows] = await db.query<IOrder[]>(sql, [id])
+    // res.json(rows)
+    // return;
+
+    rows && rows.length > 0
+      ? res.json(formatOrderDetails(rows))
+      : res.status(404).json({message: 'Order not found'})
+  } catch (error) {
+    res.status(500).json({error: logError(error)})
+  }
+}
+
+const formatOrderDetails = (rows) => ({
+  id: rows[0].order_id,
   customer_id: rows[0].customer_id,
   total_price: rows[0].total_price,
   payment_status: rows[0].payment_status,
@@ -113,7 +142,7 @@ export const createOrder = async (req: Request, res: Response) => {
       };
     }
 
-    res.status(201).json({message: 'Product created'})
+    res.status(201).json({message: 'Order created', id: result.insertId});
   } catch(error: unknown) {
     res.status(500).json({error: logError(error)})
   }

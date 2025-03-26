@@ -38,8 +38,8 @@ export const createProduct = async (req: Request, res: Response) => {
       VALUES (?, ?, ?, ?, ?, ?)
     `;
     const params = [name, description, price, stock, category, image]
-    await db.query<ResultSetHeader>(sql, params)
-    res.status(201).json({message: 'Product created'})
+    const [result] = await db.query<ResultSetHeader>(sql, params)
+    res.status(201).json({message: 'Product created', id: result.insertId});
   } catch(error: unknown) {
     res.status(500).json({error: logError(error)})
   }

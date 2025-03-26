@@ -28,8 +28,8 @@ export const updateOrderItem = async (req: Request, res: Response) => {
     console.log(rows[0].order_id)
 
     result.affectedRows === 0
-      ? res.status(404).json({message: 'OrderItem not found'})
-      : res.json({message: 'OrderItem updated'});
+      ? res.status(404).json({message: 'Order item not found'})
+      : res.json({message: 'Order item updated'});
   } catch(error) {
     res.status(500).json({error: logError(error)})
   }
@@ -45,8 +45,8 @@ export const deleteOrderItem = async (req: Request, res: Response) => {
     await updateOrderTotalPrice(rows[0].order_id);
     
     result.affectedRows === 0
-      ? res.status(404).json({message: 'OrderItem not found'})
-      : res.json({message: 'OrderItem deleted'});
+      ? res.status(404).json({message: 'Order item not found'})
+      : res.json({message: 'Order item deleted'});
   } catch (error) {
     res.status(500).json({error: logError(error)})
   }
