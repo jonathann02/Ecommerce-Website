@@ -3,10 +3,13 @@ import express from "express";
 import {connectDB} from "./config/db";
 import cors from "cors"; 
 import stripeRouter from "./routes/stripe"
+import { stripeWebhook } from "./controllers/stripeController";
 
 
 dotenv.config();
 const app = express();
+
+app.post("/stripe/webhooks", express.raw({ type: "application/json"}), stripeWebhook)
 
 // Middleware
 app.use(express.json())
@@ -14,6 +17,8 @@ app.use(express.json())
 app.use(cors())
 
 app.use("/stripe", stripeRouter)
+
+
 
 
 

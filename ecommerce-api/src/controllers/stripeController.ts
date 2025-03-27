@@ -27,3 +27,27 @@ export const createHostedCheckoutSession = async (req: Request, res: Response) =
         res.status(500).json({ error: error.message })
     }
     }
+
+    export const stripeWebhook = async (req: Request, res: Response) => {
+        try {
+            const event = req.body; 
+
+            switch (event.type) {
+                case "checkout.session.completed": {
+                    const session = event.data.object; 
+                    const sessionId = session.id; 
+
+                    const sql = `UPDATE orders SET payment_status='Paid', order_status='Received' WHERE payment_id=?`; 
+                    await db.query(sql, [sessionId]); 
+                    break; 
+                }
+    
+            }
+            res.json({ received: true }); 
+        } catch (error: any) {
+            res.status(400).send(`Webhook Error: ${error.message}`)
+        }
+        }
+    
+
+

@@ -14,6 +14,7 @@ import { OrderDetails } from './components/OrderDetails';
 import { ShopProducts } from './shop/ShopProducts'
 import { ProductDetails } from './shop/ProductDetails'
 import { CartPage } from './shop/CartPage'
+import { OrderConfirmation } from './components/OrderConfirmation';
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
         <Route path="/update-product/:id" element={<UpdateProduct />} />
         <Route path="/manage-orders" element={<ManageOrders />} />
         <Route path="/orders/:id" element={<OrderDetails />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
       </Routes>
       </main>
     </div>
