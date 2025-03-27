@@ -9,7 +9,7 @@ import { stripeWebhook } from "./controllers/stripeController";
 dotenv.config();
 const app = express();
 
-app.post("/stripe/webhooks", express.raw({ type: "application/json"}), stripeWebhook)
+
 
 // Middleware
 app.use(express.json())
