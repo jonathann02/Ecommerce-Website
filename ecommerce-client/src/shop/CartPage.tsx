@@ -192,7 +192,7 @@ export const CartPage = () => {
 
 
 if (cart.length === 0) {
-    return<p>Cart is empty</p>
+    return<p>Varukorgen är tom</p>
 }
 
 
@@ -221,35 +221,35 @@ if (cart.length === 0) {
 
             
 
-            <h3>Shipping Address</h3>
-            <label>First Name</label>
+            <h3>Leveransaddress</h3>
+            <label>Förnamn</label>
             <input value={firstName} onChange={e => setFirstName(e.target.value)} />
 
-            <label>Last Name</label>
+            <label>Efternamn</label>
             <input value={lastName} onChange={e => setLastName(e.target.value)} />
 
-            <label>Phone</label>
+            <label>Telefonnummer</label>
             <input value={phone} onChange={e => setPhone(e.target.value)} />
 
-            <label>Email</label>
+            <label>Mejl</label>
             <input value={email} onChange={e => setEmail(e.target.value)} />
 
 
-            <label>Street Address</label>
+            <label>Gatuaddress</label>
             <input value={streetAddress} onChange={e => setStreetAddress(e.target.value)} />
 
-            <label>Postal Code</label>
+            <label>Postnummer</label>
             <input value={postalCode} onChange={e => setPostalCode(e.target.value)} />
 
 
-            <label>City</label>
+            <label>Stad</label>
             <input value={city} onChange={e => setCity(e.target.value)} />
 
 
-            <label>Country</label>
+            <label>Land</label>
             <input value={country} onChange={e => setCountry(e.target.value)} />
 
-            <button onClick={handleProceedToPayment}>Proceed to payment</button>
+            <button onClick={handleProceedToPayment}>Gå vidare till betalningen</button>
         </div>
 
         )

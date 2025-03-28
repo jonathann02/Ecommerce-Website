@@ -39,14 +39,14 @@ export const ShopProducts = () => {
 
     return (
         <div>
-            <h2> All Products </h2>
+            <h2> Alla Produkter </h2>
             {products.map((product) => (
                 <div key={product.id} >
                 <h3>{product.name}</h3>
                 <p>Pris: {product.price} kr</p>
-                <Link to={`/product/${product.id}`}>See details</Link>
+                <Link to={`/product/${product.id}`}>Se detaljer</Link>
 
-                <button onClick={() => handleAddToCart(product)}>Add to cart</button>
+                <button onClick={() => handleAddToCart(product)}>Lägg till i varukorgen</button>
                 </div>
 
             ))}
