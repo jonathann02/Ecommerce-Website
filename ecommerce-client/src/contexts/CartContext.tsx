@@ -23,7 +23,6 @@ export const CartProvider = ({children}: PropsWithChildren) => {
 
   return (
     <CartContext.Provider value={{cart, dispatch}}>
-      {/* // RouterProvider comes in here though children */}
       {children} 
     </CartContext.Provider>
   )
