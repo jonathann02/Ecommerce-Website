@@ -53,8 +53,8 @@ export const createCustomer = async (req: Request, res: Response) => {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const params = [firstname, lastname, email, password, phone, street_address, postal_code, city, country]
-    await db.query<ResultSetHeader>(sql, params)
-    res.status(201).json({message: 'Customer created'})
+    const [result] = await db.query<ResultSetHeader>(sql, params)
+    res.status(201).json({message: 'Customer created', id: result.insertId});
   } catch(error: unknown) {
     res.status(500).json({error: logError(error)})
   }

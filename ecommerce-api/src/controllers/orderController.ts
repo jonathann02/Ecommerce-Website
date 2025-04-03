@@ -95,7 +95,7 @@ export const getOrderByPaymentId = async (req: Request, res: Response) => {
   }
 }
 
-const formatOrderDetails = (rows) => ({
+const formatOrderDetails = (rows: IOrder[]) => ({
   id: rows[0].order_id,
   customer_id: rows[0].customer_id,
   total_price: rows[0].total_price,
@@ -130,7 +130,7 @@ export const createOrder = async (req: Request, res: Response) => {
       VALUES (?, ?, ?, ?, ?)
     `;
 
-    const totalPrice = req.body.order_items.reduce((total, item) => total + (item.quantity * item.unit_price), 0);
+    const totalPrice = req.body.order_items.reduce((total: number, item: IOrderItem) => total + (item.quantity * item.unit_price), 0);
     const params = [customer_id, totalPrice, payment_status, payment_id, order_status]
     const [result] = await db.query<ResultSetHeader>(sql, params)
     if (result.insertId) {
