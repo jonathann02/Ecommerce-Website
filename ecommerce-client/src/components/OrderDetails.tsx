@@ -49,7 +49,8 @@ export const OrderDetails = () => {
     const deleteOrderItem = async (itemId: number) => {
         try {
             const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/order_items/${itemId}`, {
-                method: "DELETE"
+                method: "DELETE",
+                credentials: "include"
             })
             if (!response.ok) {
                 throw new Error("Kunde inte ta bort order")

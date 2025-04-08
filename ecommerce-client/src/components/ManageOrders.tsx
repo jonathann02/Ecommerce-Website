@@ -36,6 +36,7 @@ const handleUpdateStatus = async (orderId: number) => {
     try {
         const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/orders/${orderId}`, {
             method: "PATCH",
+            credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ order_status: "skickad" })
         })
@@ -53,7 +54,8 @@ const handleUpdateStatus = async (orderId: number) => {
 const deleteOrder = async (id: number) => {
     try {
         const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/orders/${id}`, {
-            method: "DELETE"
+            method: "DELETE",
+            credentials: "include"
     })
     if (!response.ok) throw new Error("Kunde inte ta bort order")
         setOrders(orders.filter((order) => order.id !== id))
