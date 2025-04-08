@@ -17,7 +17,7 @@ const [orders, setOrders] = useState<IOrder[]>([]);
     useEffect(() => {
         const fetchOrders = async () => {
         try {
-            const response = await fetch("ecommerce-api-new-eight.vercel.app/orders")
+            const response = await fetch("https://ecommerce-api-new-eight.vercel.app/orders")
             if (!response.ok) {
                 throw new Error("Kunde inte hämta ordrar")
             }
@@ -34,7 +34,7 @@ const [orders, setOrders] = useState<IOrder[]>([]);
 
 const handleUpdateStatus = async (orderId: number) => {
     try {
-        const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/orders/${orderId}`, {
+        const response = await fetch(`https://ecommerce-api-new-eight.vercel.app/orders/${orderId}`, {
             method: "PATCH",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -53,7 +53,7 @@ const handleUpdateStatus = async (orderId: number) => {
 
 const deleteOrder = async (id: number) => {
     try {
-        const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/orders/${id}`, {
+        const response = await fetch(`https://ecommerce-api-new-eight.vercel.app/orders/${id}`, {
             method: "DELETE",
             credentials: "include"
     })

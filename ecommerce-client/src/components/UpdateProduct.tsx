@@ -15,7 +15,7 @@ export const UpdateProduct = () => {
     useEffect(() => {
         const fetchProductById = async () => {
             try {
-                const response = await fetch(`ecommerce-api-new-eight.vercel.app/products/${id}`)
+                const response = await fetch(`https://ecommerce-api-new-eight.vercel.app/products/${id}`)
                 if (!response.ok) {
                     throw new Error("Kunde inte hämta produkt")
                 }
@@ -43,7 +43,7 @@ export const UpdateProduct = () => {
         const updateProduct = { name, price, description, stock, category, image }
 
         try {
-            const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/products/${id}`, {
+            const response = await fetch(`https://ecommerce-api-new-eight.vercel.app/products/${id}`, {
                 method: "PATCH",
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },

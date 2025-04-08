@@ -17,7 +17,7 @@ const [products, setProducts] = useState<IProduct[]>([]);
     useEffect(() => {
         const fetchProducts = async () => {
         try {
-            const response = await fetch("ecommerce-api-new-eight.vercel.app/products")
+            const response = await fetch("https://ecommerce-api-new-eight.vercel.app/products")
             if (!response.ok) {
                 throw new Error("Kunde inte hämta produkter")
             }
@@ -33,7 +33,7 @@ const [products, setProducts] = useState<IProduct[]>([]);
 
 const deleteProduct = async (id: number) => {
     try {
-        const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/products/${id}`, {
+        const response = await fetch(`https://ecommerce-api-new-eight.vercel.app/products/${id}`, {
             method: "DELETE",
             credentials: "include"
         })

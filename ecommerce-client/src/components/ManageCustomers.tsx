@@ -14,7 +14,7 @@ const [customers, setCustomers] = useState<ICustomer[]>([]);
     useEffect(() => {
         const fetchCustomers = async () => {
         try {
-            const response = await fetch("https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/customers")
+            const response = await fetch("https://ecommerce-api-new-eight.vercel.app/customers")
             if (!response.ok) {
                 throw new Error("Kunde inte hämta kunder")
             }
@@ -30,7 +30,7 @@ const [customers, setCustomers] = useState<ICustomer[]>([]);
 
 const deleteCustomer = async (id: number) => {
     try {
-        const response = await fetch(`ecommerce-api-new-eight.vercel.app/customers/${id}`, {
+        const response = await fetch(`https://ecommerce-api-new-eight.vercel.app/customers/${id}`, {
             method: "DELETE",
             credentials: "include"
         })

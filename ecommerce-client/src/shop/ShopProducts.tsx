@@ -20,7 +20,7 @@ export const ShopProducts = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-            const response = await fetch("ecommerce-api-new-eight.vercel.app/products");
+            const response = await fetch("https://ecommerce-api-new-eight.vercel.app/products");
             if (!response.ok) throw new Error ("Kunde inte hämta produkter"); 
             const data: IProduct[] = await response.json()
             setProducts(data)
