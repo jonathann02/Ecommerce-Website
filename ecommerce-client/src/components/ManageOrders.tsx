@@ -17,7 +17,7 @@ const [orders, setOrders] = useState<IOrder[]>([]);
     useEffect(() => {
         const fetchOrders = async () => {
         try {
-            const response = await fetch("https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/orders")
+            const response = await fetch("ecommerce-api-new-eight.vercel.app/orders")
             if (!response.ok) {
                 throw new Error("Kunde inte hämta ordrar")
             }

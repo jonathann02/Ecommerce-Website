@@ -62,7 +62,7 @@ export const UpdateCustomer = () => {
 
 
         try {
-            const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/customers/${id}`, {
+            const response = await fetch(`ecommerce-api-new-eight.vercel.app/customers/${id}`, {
                 method: "PATCH", 
                 credentials: "include",
                 headers: { "Content-Type": "application/json" },

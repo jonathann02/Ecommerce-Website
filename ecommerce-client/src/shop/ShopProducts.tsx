@@ -20,7 +20,7 @@ export const ShopProducts = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-            const response = await fetch("https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/products");
+            const response = await fetch("ecommerce-api-new-eight.vercel.app/products");
             if (!response.ok) throw new Error ("Kunde inte hämta produkter"); 
             const data: IProduct[] = await response.json()
             setProducts(data)
@@ -43,7 +43,7 @@ export const ShopProducts = () => {
             <h2> Alla Produkter </h2>
 
             <ProductSearch/> 
-            
+
             {products.map((product) => (
                 <div key={product.id} >
                 <h3>{product.name}</h3>
