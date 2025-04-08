@@ -77,7 +77,7 @@ export const CartPage = () => {
        
 
             
-            let checkResponse = await fetch(`ecommerce-api-new-eight.vercel.app/customers/email/${email}`)
+            let checkResponse = await fetch(`https://ecommerce-api-new-eight.vercel.app/customers/email/${email}`)
             if (checkResponse.status === 404) {
 
                 const newCustomerData = {
@@ -92,7 +92,7 @@ export const CartPage = () => {
                     password: ""
                 }
 
-                const createResponse = await fetch("ecommerce-api-new-eight.vercel.app/customers", {
+                const createResponse = await fetch("https://ecommerce-api-new-eight.vercel.app/customers", {
                     method: "POST", 
                     headers: { "Content-Type": "application/json" }, 
                     body: JSON.stringify(newCustomerData)
@@ -102,7 +102,7 @@ export const CartPage = () => {
                 }
                 
 
-                checkResponse = await fetch(`ecommerce-api-new-eight.vercel.app/customers/email/${email}`)
+                checkResponse = await fetch(`https://ecommerce-api-new-eight.vercel.app/customers/email/${email}`)
                 if (!checkResponse.ok) {
                     throw new Error("Customer not found")
                 }
@@ -132,7 +132,7 @@ export const CartPage = () => {
                 order_items: orderItems
             }
 
-            const createOrderResponse = await fetch("ecommerce-api-new-eight.vercel.app/orders", {
+            const createOrderResponse = await fetch("https://ecommerce-api-new-eight.vercel.app/orders", {
                 method: "POST", 
                 headers: { "Content-Type": "application/json" }, 
                 body: JSON.stringify(newOrder)
@@ -166,7 +166,7 @@ export const CartPage = () => {
         line_items: lineItems
     }
 
-    const stripeResponse = await fetch("ecommerce-api-new-eight.vercel.app/stripe/create-checkout-session-hosted", {
+    const stripeResponse = await fetch("https://ecommerce-api-new-eight.vercel.app/stripe/create-checkout-session-hosted", {
         method: "POST", 
         headers: { "Content-Type": "application/json"}, 
         body: JSON.stringify(stripePayload)
