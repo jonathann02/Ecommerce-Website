@@ -33,7 +33,7 @@ export const OrderDetails = () => {
         const fetchOrder = async () => {
             
             try {
-                const response = await fetch(`http://localhost:3000/orders/${id}`)
+                const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/orders/${id}`)
                 if (!response.ok) {
                     throw new Error("Kunde inte hämta order")
                 }
@@ -48,7 +48,7 @@ export const OrderDetails = () => {
 
     const deleteOrderItem = async (itemId: number) => {
         try {
-            const response = await fetch(`http://localhost:3000/order_items/${itemId}`, {
+            const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/order_items/${itemId}`, {
                 method: "DELETE"
             })
             if (!response.ok) {
@@ -70,7 +70,7 @@ export const OrderDetails = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/order_items/${itemId}`, {
+            const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/order_items/${itemId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ quantity: newQty })

@@ -14,7 +14,7 @@ export const CreateProduct = () => {
         const newProduct = { name, price, description, image, category, stock }
 
         try {
-            const response = await fetch("http://localhost:3000/products", {
+            const response = await fetch("https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/products", {
                 method: "POST", 
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newProduct)

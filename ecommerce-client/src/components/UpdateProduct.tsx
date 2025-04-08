@@ -15,7 +15,7 @@ export const UpdateProduct = () => {
     useEffect(() => {
         const fetchProductById = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/products/${id}`)
+                const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/products/${id}`)
                 if (!response.ok) {
                     throw new Error("Kunde inte hämta produkt")
                 }
@@ -43,7 +43,7 @@ export const UpdateProduct = () => {
         const updateProduct = { name, price, description, stock, category, image }
 
         try {
-            const response = await fetch(`http://localhost:3000/products/${id}`, {
+            const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/products/${id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updateProduct)

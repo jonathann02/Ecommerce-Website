@@ -22,7 +22,7 @@ export const OrderConfirmation = () => {
         const sessionId = params.get("session_id")
 
         if (sessionId) {
-            fetch(`http://localhost:3000/orders/payment/${sessionId}`)
+            fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/orders/payment/${sessionId}`)
             .then(res => res.json())
             .then(data => {
                 setOrder(data)

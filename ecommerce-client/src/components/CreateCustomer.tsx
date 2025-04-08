@@ -27,7 +27,7 @@ export const CreateCustomer = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:3000/customers", {
+            const response = await fetch("https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/customers", {
                 method: "POST", 
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newCustomer)

@@ -19,7 +19,7 @@ export const UpdateCustomer = () => {
     useEffect(() => {
         const fetchCustomerById = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/customers/${id}`)
+                const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/customers/${id}`)
                 if (!response.ok) {
                     throw new Error("Kunde inte hämta kund")
                 }
@@ -62,7 +62,7 @@ export const UpdateCustomer = () => {
 
 
         try {
-            const response = await fetch(`http://localhost:3000/customers/${id}`, {
+            const response = await fetch(`https://ecommerce-api-qj50qevs5-jonathans-projects-01da1bd7.vercel.app/customers/${id}`, {
                 method: "PATCH", 
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updateCustomer)
