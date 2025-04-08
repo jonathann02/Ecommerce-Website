@@ -32,7 +32,7 @@ export const ProductSearch = () => {
         }
 
         try {
-            const response = await axios.get("https://www.googleapis.com/customersearch/v1" ,{
+            const response = await axios.get("https://www.googleapis.com/customsearch/v1" ,{
                 params: {
                     q: searchText, 
                     key: "AIzaSyAfR-x1onwhV8ukchdUvKrMOjhO2evonIk", 
