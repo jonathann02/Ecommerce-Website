@@ -22,7 +22,7 @@ export const OrderConfirmation = () => {
         const sessionId = params.get("session_id")
 
         if (sessionId) {
-            fetch(`https://ecommerce-api-new-eight.vercel.app/${sessionId}`)
+            fetch(`https://ecommerce-api-new-eight.vercel.app/order-confirmation?session_id=${sessionId}`)
             .then(res => res.json())
             .then(data => {
                 setOrder(data)
