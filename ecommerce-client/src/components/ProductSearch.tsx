@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { localProducts } from "../shop/mapping";
+import { Link } from "react-router-dom";
 
 
 interface IItemThumbnail {
@@ -88,9 +89,18 @@ export const ProductSearch = () => {
                     <div className="flex-grow">
                         <h3 className="text-lg font-semibold">{item.title}</h3>
                         <p className="mb-2">{item.snippet}</p>
+
+
+                        {found ? (
+                            <Link to={linkTo} className="text-purple-600 underline">
+                                Till Produkten
+                            </Link>
+                        ) : (
+
                         <a href={linkTo} target="_blank" rel="noopener noreferrer" className="text-purple-600 underline">
                             Till Produkten
                         </a>
+                        )}
                     </div>
                     </div>
             ); 
