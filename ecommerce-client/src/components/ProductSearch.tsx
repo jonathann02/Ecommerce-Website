@@ -1,5 +1,7 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { localProducts } from "../shop/mapping";
+
 
 interface IItemThumbnail {
     src: string; 
@@ -70,8 +72,12 @@ export const ProductSearch = () => {
             {error && <p className="text-red-500">{error}</p>}
 
             {items &&
-            items.map((item) => (
-                <div key={item.link} className="border p-4 rounded mb-4 flex gap-4">
+            items.map((item) => {
+                const found = localProducts.find((p) => item.title.toLowerCase().includes(p.keyword.toLowerCase())); 
+                const linkTo = found ? found.localRoute : item.link; 
+
+                return (
+                    <div key={item.link} className="border p-4 mb-2 flex gap-2">
                     <div className="w-32">
                         <img
                         src={item.pagemap?.cse_thumbnail? item.pagemap.cse_thumbnail[0].src : "https://tacm.com/wp-content/uploads/2018/01/no-image-available.jpeg"}
@@ -82,12 +88,13 @@ export const ProductSearch = () => {
                     <div className="flex-grow">
                         <h3 className="text-lg font-semibold">{item.title}</h3>
                         <p className="mb-2">{item.snippet}</p>
-                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="text-purple-600 underline">
+                        <a href={linkTo} target="_blank" rel="noopener noreferrer" className="text-purple-600 underline">
                             Till Produkten
                         </a>
                     </div>
                     </div>
-            ))}
+            ); 
+})}
         </div>
     )
 }
